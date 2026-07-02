@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moonlight Coffee Shop</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">☕ Moonlight Coffee</div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#order">Order</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Wake Up & Smell the Coffee</h1>
+      <p>Freshly brewed happiness, one cup at a time.</p>
+      <a href="#order" class="btn">Order Now</a>
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+    <h2>Our Menu</h2>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <h3>Espresso</h3>
+        <p>Strong & bold shot of pure coffee.</p>
+        <span>Rs. 250</span>
+      </div>
+      <div class="menu-item">
+        <h3>Cappuccino</h3>
+        <p>Espresso topped with creamy foam.</p>
+        <span>Rs. 350</span>
+      </div>
+      <div class="menu-item">
+        <h3>Latte</h3>
+        <p>Smooth espresso with steamed milk.</p>
+        <span>Rs. 380</span>
+      </div>
+      <div class="menu-item">
+        <h3>Black Cofee</h3>
+        <p>Chocolate meets coffee perfection.</p>
+        <span>Rs. 400</span>
+      </div>
+      <div class="menu-item">
+        <h3>Cold Brew</h3>
+        <p>Slow steeped, served chilled.</p>
+        <span>Rs. 320</span>
+      </div>
+      <div class="menu-item">
+        <h3>Hot Chocolate</h3>
+        <p>Rich and creamy chocolate drink.</p>
+        <span>Rs. 300</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="order-section" id="order">
+    <div class="section-heading">
+      <h2>Order Online</h2>
+      <p>Pick your favourite coffee, enter your details, and we’ll prepare it fresh for pickup or delivery.</p>
+    </div>
+
+    <div class="order-wrapper">
+      <form class="order-form" id="orderForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerName">Your Name</label>
+            <input type="text" id="customerName" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="03xx-xxxxxxx" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="coffeeType">Coffee</label>
+            <select id="coffeeType" required>
+              <option value="Espresso">Espresso</option>
+              <option value="Cappuccino">Cappuccino</option>
+              <option value="Latte">Latte</option>
+              <option value="Black Cofee">Black Coffee</option>
+              <option value="Cold Brew">Cold Brew</option>
+              <option value="Hot Chocolate">Hot Chocolate</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" min="1" value="1" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Delivery Address</label>
+          <textarea id="address" rows="3" placeholder="Enter your address" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Special Notes</label>
+          <textarea id="notes" rows="2" placeholder="Sugar level, extra milk, etc."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-dark">Place Order</button>
+      </form>
+
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+        <p id="summaryText">Select a coffee to see the total.</p>
+        <div class="summary-box" id="orderMessage"></div>
+        <button type="button" id="deleteOrderBtn" class="btn btn-dark delete-btn">Delete Order</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <h2>About Us</h2>
+    <p>Welcome to our coffee shop! We serve fresh, hot, and delicious coffee made with love. Enjoy every sip in a warm and friendly atmosphere. Take a break, relax, and make your day better with a perfect cup of coffee.</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <p>📍 Main Uni Chowk Bahawalpur</p>
+    <p>📞 0312-3454832</p>
+    <p>✉️ saifiubian2k25@gmail.com</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Moonlight Coffee Shop. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const coffeePrices = {
+      Espresso: 250,
+      Cappuccino: 350,
+      Latte: 380,
+      'Black Cofee': 400,
+      'Cold Brew': 320,
+      'Hot Chocolate': 300
+    };
+
+    const coffeeType = document.getElementById('coffeeType');
+    const quantity = document.getElementById('quantity');
+    const summaryText = document.getElementById('summaryText');
+    const orderMessage = document.getElementById('orderMessage');
+    const orderForm = document.getElementById('orderForm');
+    const deleteOrderBtn = document.getElementById('deleteOrderBtn');
+
+    function updateSummary() {
+      const selectedCoffee = coffeeType.value;
+      const qty = Number(quantity.value) || 1;
+      const price = coffeePrices[selectedCoffee] || 0;
+      const total = price * qty;
+      summaryText.innerHTML = `<strong>${qty}</strong> x ${selectedCoffee} = <strong>Rs. ${total}</strong>`;
+    }
+
+    coffeeType.addEventListener('change', updateSummary);
+    quantity.addEventListener('input', updateSummary);
+    updateSummary();
+
+    orderForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const selectedCoffee = coffeeType.value;
+      const qty = Number(quantity.value) || 1;
+      const total = (coffeePrices[selectedCoffee] || 0) * qty;
+
+      orderMessage.innerHTML = `
+        <h4>Order Confirmed ✅</h4>
+        <p>Thank you, <strong>${name}</strong>! Your order for <strong>${qty} x ${selectedCoffee}</strong> has been received.</p>
+        <p><strong>Total:</strong> Rs. ${total}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Address:</strong> ${address}</p>
+        <p>We will contact you shortly to confirm your order.</p>
+      `;
+      orderMessage.classList.add('show');
+      orderForm.reset();
+      updateSummary();
+    });
+
+    deleteOrderBtn.addEventListener('click', function () {
+      orderMessage.innerHTML = '<p>No active order. Place a new order whenever you want.</p>';
+      orderMessage.classList.remove('show');
+      updateSummary();
+    });
+
+  </script>
+
+</body>
+</html>
